@@ -1,0 +1,27 @@
+-arg -w -arg -redundant-canonical-projection
+-arg -w -arg -uniform-inheritance
+-arg -w -arg -notation-overridden
+
+-Q theories cosmo
+
+theories/prelude/base.v
+theories/prelude/tactics.v
+theories/prelude/prelude.v
+
+theories/common/list.v
+theories/common/gmap.v
+theories/common/lattice.v
+
+theories/iris/base_logic/lib/lattice.v
+theories/iris/proofmode.v
+
+theories/language/memory.v
+theories/language/lang.v
+theories/language/notations.v
+theories/language/tactics.v
+theories/language/vprop.v
+theories/language/weakestpre.v
+theories/language/store.v
+theories/language/lifting.v
+theories/language/adequacy.v
+theories/language/proofmode.v
