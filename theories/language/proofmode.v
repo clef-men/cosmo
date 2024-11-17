@@ -17,8 +17,8 @@ From cosmo.language Require Export
   store
   notations
   tactics.
-(* From cosmo.program_logic Require Import *)
-(*   atomic. *)
+From cosmo.language Require Import
+  atomic.
 
 Open Scope Z.
 
@@ -651,14 +651,14 @@ premise.  The second one additionaly does some framing: it gets rid of [Hs] from
 the context, which is intended to be the non-laterable assertions that iAuIntro
 would choke on.  You get them all back in the continuation of the atomic
 operation. *)
-(* Tactic Notation "awp_apply" open_constr(lem) := *)
-(*   (wp_apply_core lem ltac:(fun H => iApplyHyp H)); *)
-(*   last iAuIntro. *)
-(* Tactic Notation "awp_apply" open_constr(lem) "without" constr(Hs) := *)
-(*   (wp_apply_core lem *)
-(*     ltac:(fun H => *)
-(*       iApply wp_frame_wand_l; iSplitL Hs; [iAccu|iApplyHyp H])); *)
-(*   last iAuIntro. *)
+Tactic Notation "awp_apply" open_constr(lem) :=
+  (wp_apply_core lem ltac:(fun H => iApplyHyp H));
+  last iAuIntro.
+Tactic Notation "awp_apply" open_constr(lem) "without" constr(Hs) :=
+  (wp_apply_core lem
+    ltac:(fun H =>
+      iApply wp_frame_wand_l; iSplitL Hs; [iAccu|iApplyHyp H]));
+  last iAuIntro.
 
 Ltac solve_nonneg :=
   first [ done | lia ].

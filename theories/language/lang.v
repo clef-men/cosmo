@@ -38,7 +38,7 @@ Inductive bin_op :=
   | LeOp | EqOp
   | AndOp | OrOp.
 
-Module base.
+Module Export base.
   Inductive expr :=
     | Val (v : val)
     | Var (x : string)
@@ -749,16 +749,13 @@ Module base.
       | _ =>
           False
       end.
-  Opaque AtomicExpr.
-
-  #[local] Hint Extern 1 (
-    AtomicExpr _
-  ) =>
-    exact I
-  : typeclass_instances.
 End base.
 
-Export base.
+#[global] Hint Extern 1 (
+  AtomicExpr _
+) =>
+  exact I
+: typeclass_instances.
 
 Module view_lang.
   Record expr : Type := mkExpr {

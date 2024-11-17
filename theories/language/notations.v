@@ -70,6 +70,25 @@ Notation "( e1 , e2 , .. , en )" := (
   PairV .. (PairV e1 e2) .. en
 ) : val_scope.
 
+Notation "'let:' ( x , y1 , .. , yn ) := e1 'in' e2" :=
+  (Lam x%binder
+    (Lam yn%binder
+      (Lam x%binder
+        (..
+          (Lam y1%binder
+            (Lam x%binder
+              (e2%E)
+              (Fst x%binder))
+             (Snd x%binder)
+          )
+        ..)
+        (Fst x%binder))
+      (Snd x%binder))
+    e1%E)
+  (at level 200, x, y1, yn at level 1, e1, e2 at level 200,
+   format "'[' 'let:'  (  x , y1  ,  ..  ,  yn  )  :=  '[' e1 ']'  'in'  '/' e2 ']'")
+  : expr_scope.
+
 Notation "'match:' e0 'with' 'InjL' x1 => e1 | 'InjR' x2 => e2 'end'" := (
   Match e0 x1%binder e1 x2%binder e2
 )(e0, x1, e1, x2, e2 at level 200,
@@ -291,3 +310,27 @@ Notation "'match:' e0 'with' | 'SOME' x => e2 | 'NONE' => e1 'end'" := (
 )(only parsing,
   e0, e1, x, e2 at level 200
 ) : expr_scope.
+
+Notation While cond body :=
+  ((rec: "_while" <> :=
+    if: cond then
+      body ;; "_while" #()
+    else
+      #()
+  ) #())%E.
+Notation "'while:' e1 'do' e2 'enddo'" := (While e1%E e2%E)
+  (at level 200, e1, e2 at level 200,
+   format "'[' 'while:'  e1  'do'  '/  ' e2  '/' 'enddo' ']'") : expr_scope.
+
+Notation For iname start stop body :=
+  ((let: "_stop" := stop in
+    rec: "_for" "_i" :=
+      if: "_i" ≤ "_stop" then
+        let: iname := "_i" in
+        body ;; "_for" ("_i" + #1)
+      else
+        #()
+   ) start)%E.
+Notation "'for:' i 'from' e1 'to' e2 'do' e3 'enddo'" := (For i e1%E e2%E e3%E)
+  (at level 200, e1, e2, e3 at level 200,
+   format "'[' 'for:'  i  'from'  e1  'to'  e2  'do'  '/  ' e3  '/' 'enddo' ']'") : expr_scope.

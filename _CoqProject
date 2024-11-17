@@ -25,3 +25,12 @@ theories/language/store.v
 theories/language/lifting.v
 theories/language/adequacy.v
 theories/language/proofmode.v
+theories/language/atomic.v
+
+theories/examples/escrow.v
+theories/examples/spinlock.v
+theories/examples/ticketlock.v
+theories/examples/dekker.v
+theories/examples/peterson.v
+theories/examples/bounded_queue.v
+theories/examples/pipeline.v
